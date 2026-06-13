@@ -14,6 +14,10 @@
   header p{ font-size:11.5px; margin:4px 0 0; color:#aab; }
   header a.nav{ display:inline-block; margin-top:8px; font-size:12px; color:#fff; background:#5b7de0; padding:6px 12px; border-radius:8px; text-decoration:none; }
   header a.nav:hover{ background:#4a6cd0; }
+  .btns{ display:flex; gap:8px; margin:14px 0 0; }
+  .btns button{ flex:1; padding:9px; font-size:13px; border-radius:10px; border:1px solid #ccc; background:#fff; cursor:pointer; }
+  .btns button:hover{ background:#f0f0f0; }
+  .empty{ text-align:center; color:var(--sub); font-size:13px; padding:30px 10px; }
   .wrap{ max-width:760px; margin:0 auto; padding:14px; }
   .pickers{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   @media(max-width:560px){ .pickers{ grid-template-columns:1fr; } }
@@ -71,6 +75,11 @@
     </div>
   </div>
 
+  <div class="btns">
+    <button onclick="clearAll()">🔄 クリア</button>
+    <button onclick="copyResult()">📋 結果をコピー</button>
+  </div>
+
   <div class="result" id="result"></div>
 </div>
 <footer>恋愛式学(ジョニー式/個別認識学)準拠|相性はあくまで指標。合わない相性でも理解で乗り越えられます</footer>
@@ -124,18 +133,39 @@ const GRADES = [
  {g:"▲",cls:"gD",d:"要注意。違いを前提に"}
 ];
 
-function fillSelect(sel, withNone){
-  let html = "";
-  if(withNone) html += `<option value="">(なし)</option>`;
+function fillSelect(sel, noneLabel){
+  let html = `<option value="">${noneLabel}</option>`;
   KEYS.forEach(k=> html += `<option value="${k}">${EMOJI[k]} ${T[k]}</option>`);
   sel.innerHTML = html;
 }
 const meMain=document.getElementById("meMain"), meSub=document.getElementById("meSub"),
       youMain=document.getElementById("youMain"), youSub=document.getElementById("youSub");
-fillSelect(meMain,false); fillSelect(meSub,true); fillSelect(youMain,false); fillSelect(youSub,true);
-// デフォルト: 自分=踊り子×戦士、相手=戦士×魔法使い
-meMain.value="OD"; meSub.value="SE"; youMain.value="SE"; youSub.value="MA";
+fillSelect(meMain,"(選択してください)"); fillSelect(meSub,"(なし)"); fillSelect(youMain,"(選択してください)"); fillSelect(youSub,"(なし)");
+// デフォルトは未選択
 [meMain,meSub,youMain,youSub].forEach(s=> s.addEventListener("change", render));
+
+function clearAll(){
+  meMain.value=""; meSub.value=""; youMain.value=""; youSub.value="";
+  render();
+}
+function copyResult(){
+  const mM=meMain.value, yM=youMain.value;
+  if(!mM || !yM){ alert("自分と相手の主タイプを選択してください"); return; }
+  const mS=meSub.value, yS=youSub.value;
+  let lines=[];
+  lines.push("【恋愛式学 相性診断】");
+  lines.push("自分: "+typeName(mM,mS));
+  lines.push("相手: "+typeName(yM,yS));
+  [["love","恋愛"],["work","仕事"],["marry","結婚"]].forEach(([c,label])=>{
+    const r1=rankOf(mM,yM,c), r2=rankOf(yM,mM,c);
+    const g=GRADES[Math.round((r1+r2)/2)];
+    lines.push(label+": "+g.g+"(自分→相手"+(r1+1)+"位 / 相手→自分"+(r2+1)+"位)");
+  });
+  lines.push("");
+  lines.push("自分→相手: "+HOW[mM+","+yM]);
+  lines.push("相手→自分: "+HOW[yM+","+mM]);
+  navigator.clipboard.writeText(lines.join("\n")).then(()=>alert("結果をコピーしました"));
+}
 
 function typeName(main, sub){
   if(!sub || sub===main) return NAME16[main] + "(" + T[main] + "ド直球)";
@@ -149,8 +179,14 @@ function rankOf(selfMain, otherMain, cat){
 
 function render(){
   const mM=meMain.value, mS=meSub.value, yM=youMain.value, yS=youSub.value;
-  document.getElementById("meBadge").textContent = EMOJI[mM]+" "+typeName(mM,mS);
-  document.getElementById("youBadge").textContent = EMOJI[yM]+" "+typeName(yM,yS);
+  document.getElementById("meBadge").textContent = mM? EMOJI[mM]+" "+typeName(mM,mS) : "―";
+  document.getElementById("youBadge").textContent = yM? EMOJI[yM]+" "+typeName(yM,yS) : "―";
+
+  if(!mM || !yM){
+    document.getElementById("result").innerHTML =
+      `<div class="card"><div class="empty">👆 自分と相手の<b>主タイプ</b>を選ぶと、相性と付き合い方が表示されます。</div></div>`;
+    return;
+  }
 
   // 恋愛相性を主軸に総合判定(自分→相手 と 相手→自分 の平均順位)
   const cats=[["love","💗 恋愛"],["work","💼 仕事"],["marry","💍 結婚"]];
