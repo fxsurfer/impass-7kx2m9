@@ -18,6 +18,17 @@
   .btns button{ flex:1; padding:9px; font-size:13px; border-radius:10px; border:1px solid #ccc; background:#fff; cursor:pointer; }
   .btns button:hover{ background:#f0f0f0; }
   .empty{ text-align:center; color:var(--sub); font-size:13px; padding:30px 10px; }
+  .t16wrap{ overflow-x:auto; }
+  table.t16{ width:100%; border-collapse:collapse; font-size:12px; min-width:520px; }
+  table.t16 th{ background:#1f2330; color:#fff; padding:7px 8px; text-align:left; font-size:11.5px; position:sticky; top:0; }
+  table.t16 td{ border-bottom:1px solid var(--line); padding:7px 8px; vertical-align:top; }
+  table.t16 .nm{ font-weight:700; white-space:nowrap; }
+  table.t16 .cmp{ color:var(--sub); white-space:nowrap; font-size:11px; }
+  table.t16 .mbti{ white-space:nowrap; font-weight:600; }
+  table.t16 tr.gSE td:first-child{ border-left:5px solid var(--se); }
+  table.t16 tr.gOD td:first-child{ border-left:5px solid var(--od); }
+  table.t16 tr.gSO td:first-child{ border-left:5px solid var(--so); }
+  table.t16 tr.gMA td:first-child{ border-left:5px solid var(--ma); }
   .wrap{ max-width:760px; margin:0 auto; padding:14px; }
   .pickers{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   @media(max-width:560px){ .pickers{ grid-template-columns:1fr; } }
@@ -81,6 +92,34 @@
   </div>
 
   <div class="result" id="result"></div>
+
+  <div class="card">
+    <h3>📖 16タイプ × MBTI 早見表</h3>
+    <div class="t16wrap">
+      <table class="t16">
+        <thead><tr><th>タイプ</th><th>構成</th><th>MBTI</th><th>特徴</th></tr></thead>
+        <tbody>
+          <tr class="gSE"><td class="nm">⚔️ 狂戦士</td><td class="cmp">戦士</td><td class="mbti">ESTJ 幹部</td><td>裏表ゼロの直球エネルギー。目標に一直線、アプローチもド直球。</td></tr>
+          <tr class="gSE"><td class="nm">🦸 勇者</td><td class="cmp">戦士×踊り子</td><td class="mbti">ESTP 起業家</td><td>熱量と愛嬌のリーダー。みんなのために前進する人気者。</td></tr>
+          <tr class="gSE"><td class="nm">🛡️ 聖戦士</td><td class="cmp">戦士×僧侶</td><td class="mbti">ENFJ 主人公</td><td>情熱と協調性の両立。仲間のために戦う。</td></tr>
+          <tr class="gSE"><td class="nm">🔮 魔法戦士</td><td class="cmp">戦士×魔法使い</td><td class="mbti">ENTJ 指揮官</td><td>目標達成×分析思考。効率よく結果を出す指揮官。</td></tr>
+          <tr class="gOD"><td class="nm">👑 姫</td><td class="cmp">踊り子</td><td class="mbti">ESFP エンタメ</td><td>天真爛漫で愛され体質。協調性ありそうで実は「私が主役」。</td></tr>
+          <tr class="gOD"><td class="nm">🐴 騎士</td><td class="cmp">踊り子×戦士</td><td class="mbti">ENFP 運動家</td><td>ノリと行動力のムードメーカー。</td></tr>
+          <tr class="gOD"><td class="nm">🧚 妖精</td><td class="cmp">踊り子×僧侶</td><td class="mbti">ESFJ 領事</td><td>明るく優しい協調派。場を和ませる。</td></tr>
+          <tr class="gOD"><td class="nm">🗡️ 盗賊</td><td class="cmp">踊り子×魔法使い</td><td class="mbti">ENTP 討論者</td><td>愛嬌の裏に独自の世界観。天然で言葉選びが独特な二面性。</td></tr>
+          <tr class="gSO"><td class="nm">⛪ シスター</td><td class="cmp">僧侶</td><td class="mbti">ISFJ 擁護者</td><td>究極の癒しと献身。場の平和を静かに守る。</td></tr>
+          <tr class="gSO"><td class="nm">🎖️ 兵士</td><td class="cmp">僧侶×戦士</td><td class="mbti">INFJ 提唱者</td><td>縁の下で支えつつ芯が強い。</td></tr>
+          <tr class="gSO"><td class="nm">✝️ 牧師</td><td class="cmp">僧侶×踊り子</td><td class="mbti">INFP 仲介者</td><td>尽くす愛情派。YESマンで和を作るが本音を言えない。</td></tr>
+          <tr class="gSO"><td class="nm">📚 賢者</td><td class="cmp">僧侶×魔法使い</td><td class="mbti">ISTJ 管理者</td><td>静かで誠実な知恵者。もめごとのない安定感。</td></tr>
+          <tr class="gMA"><td class="nm">🧙 魔道士</td><td class="cmp">魔法使い</td><td class="mbti">INTP 論理学者</td><td>探求と論理の人。本質以外に興味なし。</td></tr>
+          <tr class="gMA"><td class="nm">🥷 忍者</td><td class="cmp">魔法使い×戦士</td><td class="mbti">INTJ 建築家</td><td>静かな戦略家。3年5年10年の計画を着実に遂行。</td></tr>
+          <tr class="gMA"><td class="nm">🃏 道化師</td><td class="cmp">魔法使い×踊り子</td><td class="mbti">ISTP 巨匠</td><td>あざとさとセンスを操る知的エンターテイナー。</td></tr>
+          <tr class="gMA"><td class="nm">🔯 占い師</td><td class="cmp">魔法使い×僧侶</td><td class="mbti">ISFP 冒険家</td><td>一見太陽に見えるフェイク持ちの穏やかな観察者。掴みどころがない。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="matrix">※MBTI対応はあくまで近似(継承セミナー情報)。左の色帯は主タイプ(⚔️戦士/💃踊り子/☩僧侶/🔮魔法使い)。</div>
+  </div>
 </div>
 <footer>恋愛式学(ジョニー式/個別認識学)準拠|相性はあくまで指標。合わない相性でも理解で乗り越えられます</footer>
 
