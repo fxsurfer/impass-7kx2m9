@@ -191,9 +191,12 @@ DATA.forEach((cat,ci)=>{
   });
   d.appendChild(ch); main.appendChild(d);
 });
-// ラベル→キーの逆引き(エクスポート/インポート用。インデックス変更に強い)
+// ラベル→キーの逆引き(旧形式コードの読み込み用)
 const LABEL2KEY={};
 DATA.forEach((cat,ci)=> cat.items.forEach((it,ii)=> LABEL2KEY[it[0]]=ci+"_"+ii ));
+// フラットインデックス(エクスポート/インポートのビットマスク用。項目は末尾追加なら互換維持)
+const FLAT=[];
+DATA.forEach((cat,ci)=> cat.items.forEach((it,ii)=> FLAT.push(ci+"_"+ii) ));
 function calc(){
   const s={SE:0,OD:0,SO:0,MA:0};
   state.forEach(k=>{ const [ci,ii]=k.split("_").map(Number); const w=DATA[ci].items[ii][1]; for(const t in w) s[t]+=w[t]; });
@@ -251,24 +254,37 @@ function applySelection(labels){
 }
 function exportData(){
   if(state.size===0){ alert("先にシグナルを選択してください"); return; }
-  const picked=[...state].map(k=>{ const [ci,ii]=k.split("_").map(Number); return DATA[ci].items[ii][0]; });
-  const code="IMPASS1:"+btoa(encodeURIComponent(JSON.stringify(picked)));
+  let bits=0n;
+  state.forEach(k=>{ const gi=FLAT.indexOf(k); if(gi>=0) bits|=(1n<<BigInt(gi)); });
+  const code="IM-"+bits.toString(16);
   navigator.clipboard.writeText(code).then(
-    ()=>alert("診断コードをコピーしました📤\nメモやLINEに保存しておけば、インポートで同じ選択を復元できます。"),
+    ()=>alert("診断コードをコピーしました📤\n"+code+"\n\nメモやLINEに保存すれば、インポートで同じ選択を復元できます。"),
     ()=>window.prompt("以下の診断コードをコピーして保存してください📤", code)
   );
 }
 function importData(){
   const input=window.prompt("診断コードを貼り付けてください📥");
   if(!input) return;
-  let labels;
-  try{
-    const body=input.trim().replace(/^IMPASS1:/,"");
-    labels=JSON.parse(decodeURIComponent(atob(body)));
-    if(!Array.isArray(labels)) throw 0;
-  }catch(e){ alert("コードが正しくありません。コピーし直してください。"); return; }
+  const raw=input.trim();
+  // 旧形式(IMPASS1:ラベルJSON)も読めるよう後方互換
+  if(/^IMPASS1:/.test(raw)){
+    try{
+      const labels=JSON.parse(decodeURIComponent(atob(raw.replace(/^IMPASS1:/,""))));
+      if(!Array.isArray(labels)) throw 0;
+      const {hit,miss}=applySelection(labels);
+      alert("インポート完了📥 "+hit+"件を復元"+(miss?"("+miss+"件スキップ)":""));
+    }catch(e){ alert("コードが正しくありません。"); }
+    return;
+  }
+  let bits;
+  try{ bits=BigInt("0x"+raw.replace(/^IM-/,"")); }
+  catch(e){ alert("コードが正しくありません。コピーし直してください。"); return; }
+  const labels=[];
+  for(let gi=0; gi<FLAT.length; gi++){
+    if((bits>>BigInt(gi))&1n){ const [ci,ii]=FLAT[gi].split("_").map(Number); labels.push(DATA[ci].items[ii][0]); }
+  }
   const {hit,miss}=applySelection(labels);
-  alert("インポート完了📥 "+hit+"件を復元しました"+(miss?"("+miss+"件は不明な項目のためスキップ)":""));
+  alert("インポート完了📥 "+hit+"件を復元しました"+(miss?"("+miss+"件はスキップ)":""));
 }
 function copyResult(){
   const s={SE:0,OD:0,SO:0,MA:0};
