@@ -172,6 +172,16 @@ const GRADES = [
  {g:"▲",cls:"gD",d:"要注意。違いを前提に"}
 ];
 
+// 相手の主タイプ別「交際後のリアル」(新資料の『カップルになると』より)
+const COUPLE = {
+ SE:"金銭感覚(経験・体験にお金をかける)の価値観を早めに共有。自己主張しないと物足りなく思われる。かまってちゃんは逆効果。短期恋愛になりがちで、長期化には相手の包容力が要る。",
+ OD:"毎日会いたい・LINEは毎日が当たり前。何でも一緒にいたい甘えん坊。愛情表現には愛情表現で返すこと。相思相愛でないと急に冷めるので、こまめな共感を絶やさない。",
+ SO:"意思表示が少なく「どこでもいいよ」が多い。リードして当たり前と捉えると楽。付き合ってすぐ「こうしてほしい」と変化を求めるのはNG、雰囲気を見ながら。",
+ MA:"月1〜2回デート・週数回の生存確認連絡で十分。絵文字や愛情表現は少なめ。マイペースを尊重しつつ「何を(目的)」でリードを。彼氏ヅラ厳禁。"
+};
+// コミュニケーション四則演算(ジョニー式)
+const COMMOP = { SE:"×(称賛とリアクションを増幅して返す)", OD:"＋(共感を足し続ける)", SO:"÷(押し付けず相手に合わせ調和)", MA:"−(無駄をそぎ簡潔に)" };
+
 function fillSelect(sel, noneLabel){
   let html = `<option value="">${noneLabel}</option>`;
   KEYS.forEach(k=> html += `<option value="${k}">${EMOJI[k]} ${T[k]}</option>`);
@@ -203,6 +213,9 @@ function copyResult(){
   lines.push("");
   lines.push("自分→相手: "+HOW[mM+","+yM]);
   lines.push("相手→自分: "+HOW[yM+","+mM]);
+  lines.push("");
+  lines.push("交際後のリアル(相手="+T[yM]+"): "+COUPLE[yM]);
+  lines.push("コミュ式: 自分"+COMMOP[mM]+" / 相手"+COMMOP[yM]);
   navigator.clipboard.writeText(lines.join("\n")).then(()=>alert("結果をコピーしました"));
 }
 
@@ -267,6 +280,14 @@ function render(){
         <div class="dirtx">${how2}</div>
       </div>
       ${mS||yS? `<div class="tagline">💡 副タイプ(${mS?T[mS]:"なし"} / ${yS?T[yS]:"なし"})も加味すると、上記に副タイプの色が混ざります。例: 副が踊り子なら愛嬌・共感が増し、副が魔法使いならこだわり・分析が増します。</div>`:""}
+    </div>
+    <div class="card">
+      <h3>💑 交際後のリアル(相手=${T[yM]})</h3>
+      <div class="dirtx">${COUPLE[yM]}</div>
+    </div>
+    <div class="card">
+      <h3>🧮 コミュニケーション四則演算(ジョニー式)</h3>
+      <div class="dirtx">🙋 自分(${T[mM]})= <b>${COMMOP[mM]}</b><br>💗 相手(${T[yM]})= <b>${COMMOP[yM]}</b><br><span class="pure">相手の演算に合わせて接し方を切り替えると噛み合います。</span></div>
     </div>`;
 }
 render();

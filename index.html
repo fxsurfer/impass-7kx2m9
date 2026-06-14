@@ -44,8 +44,8 @@
   .cand .pc{ color:var(--sub); }
   .hint{ font-size:12px; line-height:1.65; }
   .hint b{ color:#c2185b; }
-  .btns{ display:flex; gap:8px; margin-bottom:12px; }
-  button{ flex:1; padding:9px; font-size:13px; border-radius:10px; border:1px solid #ccc; background:#fff; cursor:pointer; }
+  .btns{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+  button{ flex:1 1 45%; padding:9px; font-size:13px; border-radius:10px; border:1px solid #ccc; background:#fff; cursor:pointer; }
   button:hover{ background:#f0f0f0; }
   .cnt{ font-size:11.5px; color:var(--sub); text-align:center; margin-bottom:8px; }
   footer{ text-align:center; font-size:11px; color:#999; padding:18px; }
@@ -61,7 +61,7 @@
 <div class="wrap">
   <main id="cats"></main>
   <aside class="panel">
-    <div class="btns"><button onclick="resetAll()">🔄 リセット</button><button onclick="copyResult()">📋 結果をコピー</button></div>
+    <div class="btns"><button onclick="resetAll()">🔄 リセット</button><button onclick="copyResult()">📋 結果をコピー</button><button onclick="exportData()">📤 エクスポート</button><button onclick="importData()">📥 インポート</button></div>
     <div class="cnt" id="cnt">選択数: 0</div>
     <div class="card">
       <h3>📊 4タイプスコア</h3>
@@ -191,6 +191,9 @@ DATA.forEach((cat,ci)=>{
   });
   d.appendChild(ch); main.appendChild(d);
 });
+// ラベル→キーの逆引き(エクスポート/インポート用。インデックス変更に強い)
+const LABEL2KEY={};
+DATA.forEach((cat,ci)=> cat.items.forEach((it,ii)=> LABEL2KEY[it[0]]=ci+"_"+ii ));
 function calc(){
   const s={SE:0,OD:0,SO:0,MA:0};
   state.forEach(k=>{ const [ci,ii]=k.split("_").map(Number); const w=DATA[ci].items[ii][1]; for(const t in w) s[t]+=w[t]; });
@@ -235,6 +238,38 @@ function calc(){
   hint.innerHTML=HINTS[order[0]] + (gap<1.5? "<br><br>⚖️ <b>"+TYPES[order[0]]+"と"+TYPES[order[1]]+"が拮抗中。</b>会話で「なぜ好きか(動機)」を聞いて絞り込みを。":"");
 }
 function resetAll(){ state.clear(); document.querySelectorAll(".chip.on").forEach(c=>c.classList.remove("on")); calc(); }
+function applySelection(labels){
+  state.clear(); document.querySelectorAll(".chip.on").forEach(c=>c.classList.remove("on"));
+  let hit=0, miss=0;
+  labels.forEach(label=>{
+    const key=LABEL2KEY[label];
+    if(key){ state.add(key); const chip=document.querySelector('.chip[data-key="'+key+'"]'); if(chip) chip.classList.add("on"); hit++; }
+    else miss++;
+  });
+  calc();
+  return {hit,miss};
+}
+function exportData(){
+  if(state.size===0){ alert("先にシグナルを選択してください"); return; }
+  const picked=[...state].map(k=>{ const [ci,ii]=k.split("_").map(Number); return DATA[ci].items[ii][0]; });
+  const code="IMPASS1:"+btoa(encodeURIComponent(JSON.stringify(picked)));
+  navigator.clipboard.writeText(code).then(
+    ()=>alert("診断コードをコピーしました📤\nメモやLINEに保存しておけば、インポートで同じ選択を復元できます。"),
+    ()=>window.prompt("以下の診断コードをコピーして保存してください📤", code)
+  );
+}
+function importData(){
+  const input=window.prompt("診断コードを貼り付けてください📥");
+  if(!input) return;
+  let labels;
+  try{
+    const body=input.trim().replace(/^IMPASS1:/,"");
+    labels=JSON.parse(decodeURIComponent(atob(body)));
+    if(!Array.isArray(labels)) throw 0;
+  }catch(e){ alert("コードが正しくありません。コピーし直してください。"); return; }
+  const {hit,miss}=applySelection(labels);
+  alert("インポート完了📥 "+hit+"件を復元しました"+(miss?"("+miss+"件は不明な項目のためスキップ)":""));
+}
 function copyResult(){
   const s={SE:0,OD:0,SO:0,MA:0};
   state.forEach(k=>{ const [ci,ii]=k.split("_").map(Number); const w=DATA[ci].items[ii][1]; for(const t in w) s[t]+=w[t]; });
