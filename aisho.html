@@ -29,6 +29,11 @@
   table.t16 tr.gOD td:first-child{ border-left:5px solid var(--od); }
   table.t16 tr.gSO td:first-child{ border-left:5px solid var(--so); }
   table.t16 tr.gMA td:first-child{ border-left:5px solid var(--ma); }
+  table.t16 tbody tr[data-name]{ cursor:pointer; }
+  table.t16 tbody tr[data-name]:hover{ background:#f6f7fb; }
+  table.t16 tr.det td{ background:#fbfbfd; font-size:11.5px; line-height:1.65; }
+  table.t16 tr.det .k{ font-weight:700; color:#444; }
+  table.t16 tr.det .danger{ color:#c0392b; }
   .wrap{ max-width:760px; margin:0 auto; padding:14px; }
   .pickers{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   @media(max-width:560px){ .pickers{ grid-template-columns:1fr; } }
@@ -97,28 +102,28 @@
     <h3>📖 16タイプ × MBTI 早見表</h3>
     <div class="t16wrap">
       <table class="t16">
-        <thead><tr><th>タイプ</th><th>構成</th><th>MBTI</th><th>特徴</th></tr></thead>
+        <thead><tr><th>タイプ</th><th>構成</th><th>MBTI</th><th>特徴(タップで詳細▾)</th></tr></thead>
         <tbody>
-          <tr class="gSE"><td class="nm">⚔️ 狂戦士</td><td class="cmp">戦士</td><td class="mbti">ESTJ 幹部</td><td>裏表ゼロの直球エネルギー。目標に一直線、アプローチもド直球。</td></tr>
-          <tr class="gSE"><td class="nm">🦸 勇者</td><td class="cmp">戦士×踊り子</td><td class="mbti">ESTP 起業家</td><td>熱量と愛嬌のリーダー。みんなのために前進する人気者。</td></tr>
-          <tr class="gSE"><td class="nm">🛡️ 聖戦士</td><td class="cmp">戦士×僧侶</td><td class="mbti">ENFJ 主人公</td><td>情熱と協調性の両立。仲間のために戦う。</td></tr>
-          <tr class="gSE"><td class="nm">🔮 魔法戦士</td><td class="cmp">戦士×魔法使い</td><td class="mbti">ENTJ 指揮官</td><td>目標達成×分析思考。効率よく結果を出す指揮官。</td></tr>
-          <tr class="gOD"><td class="nm">👑 姫</td><td class="cmp">踊り子</td><td class="mbti">ESFP エンタメ</td><td>天真爛漫で愛され体質。協調性ありそうで実は「私が主役」。</td></tr>
-          <tr class="gOD"><td class="nm">🐴 騎士</td><td class="cmp">踊り子×戦士</td><td class="mbti">ENFP 運動家</td><td>ノリと行動力のムードメーカー。</td></tr>
-          <tr class="gOD"><td class="nm">🧚 妖精</td><td class="cmp">踊り子×僧侶</td><td class="mbti">ESFJ 領事</td><td>明るく優しい協調派。場を和ませる。</td></tr>
-          <tr class="gOD"><td class="nm">🗡️ 盗賊</td><td class="cmp">踊り子×魔法使い</td><td class="mbti">ENTP 討論者</td><td>愛嬌の裏に独自の世界観。天然で言葉選びが独特な二面性。</td></tr>
-          <tr class="gSO"><td class="nm">⛪ シスター</td><td class="cmp">僧侶</td><td class="mbti">ISFJ 擁護者</td><td>究極の癒しと献身。場の平和を静かに守る。</td></tr>
-          <tr class="gSO"><td class="nm">🎖️ 兵士</td><td class="cmp">僧侶×戦士</td><td class="mbti">INFJ 提唱者</td><td>縁の下で支えつつ芯が強い。</td></tr>
-          <tr class="gSO"><td class="nm">✝️ 牧師</td><td class="cmp">僧侶×踊り子</td><td class="mbti">INFP 仲介者</td><td>尽くす愛情派。YESマンで和を作るが本音を言えない。</td></tr>
-          <tr class="gSO"><td class="nm">📚 賢者</td><td class="cmp">僧侶×魔法使い</td><td class="mbti">ISTJ 管理者</td><td>静かで誠実な知恵者。もめごとのない安定感。</td></tr>
-          <tr class="gMA"><td class="nm">🧙 魔道士</td><td class="cmp">魔法使い</td><td class="mbti">INTP 論理学者</td><td>探求と論理の人。本質以外に興味なし。</td></tr>
-          <tr class="gMA"><td class="nm">🥷 忍者</td><td class="cmp">魔法使い×戦士</td><td class="mbti">INTJ 建築家</td><td>静かな戦略家。3年5年10年の計画を着実に遂行。</td></tr>
-          <tr class="gMA"><td class="nm">🃏 道化師</td><td class="cmp">魔法使い×踊り子</td><td class="mbti">ISTP 巨匠</td><td>あざとさとセンスを操る知的エンターテイナー。</td></tr>
-          <tr class="gMA"><td class="nm">🔯 占い師</td><td class="cmp">魔法使い×僧侶</td><td class="mbti">ISFP 冒険家</td><td>一見太陽に見えるフェイク持ちの穏やかな観察者。掴みどころがない。</td></tr>
+          <tr class="gSE" data-name="狂戦士"><td class="nm">⚔️ 狂戦士</td><td class="cmp">戦士</td><td class="mbti">ESTJ 幹部</td><td>裏表ゼロの直球エネルギー。目標に一直線、アプローチもド直球。</td></tr>
+          <tr class="gSE" data-name="勇者"><td class="nm">🦸 勇者</td><td class="cmp">戦士×踊り子</td><td class="mbti">ESTP 起業家</td><td>熱量と愛嬌のリーダー。みんなのために前進する人気者。</td></tr>
+          <tr class="gSE" data-name="聖戦士"><td class="nm">🛡️ 聖戦士</td><td class="cmp">戦士×僧侶</td><td class="mbti">ENFJ 主人公</td><td>情熱と協調性の両立。仲間のために戦う。</td></tr>
+          <tr class="gSE" data-name="魔法戦士"><td class="nm">🔮 魔法戦士</td><td class="cmp">戦士×魔法使い</td><td class="mbti">ENTJ 指揮官</td><td>目標達成×分析思考。効率よく結果を出す指揮官。</td></tr>
+          <tr class="gOD" data-name="姫"><td class="nm">👑 姫</td><td class="cmp">踊り子</td><td class="mbti">ESFP エンタメ</td><td>天真爛漫で愛され体質。協調性ありそうで実は「私が主役」。</td></tr>
+          <tr class="gOD" data-name="騎士"><td class="nm">🐴 騎士</td><td class="cmp">踊り子×戦士</td><td class="mbti">ENFP 運動家</td><td>ノリと行動力のムードメーカー。</td></tr>
+          <tr class="gOD" data-name="妖精"><td class="nm">🧚 妖精</td><td class="cmp">踊り子×僧侶</td><td class="mbti">ESFJ 領事</td><td>明るく優しい協調派。場を和ませる。</td></tr>
+          <tr class="gOD" data-name="盗賊"><td class="nm">🗡️ 盗賊</td><td class="cmp">踊り子×魔法使い</td><td class="mbti">ENTP 討論者</td><td>愛嬌の裏に独自の世界観。天然で言葉選びが独特な二面性。</td></tr>
+          <tr class="gSO" data-name="シスター"><td class="nm">⛪ シスター</td><td class="cmp">僧侶</td><td class="mbti">ISFJ 擁護者</td><td>究極の癒しと献身。場の平和を静かに守る。</td></tr>
+          <tr class="gSO" data-name="兵士"><td class="nm">🎖️ 兵士</td><td class="cmp">僧侶×戦士</td><td class="mbti">INFJ 提唱者</td><td>縁の下で支えつつ芯が強い。</td></tr>
+          <tr class="gSO" data-name="牧師"><td class="nm">✝️ 牧師</td><td class="cmp">僧侶×踊り子</td><td class="mbti">INFP 仲介者</td><td>尽くす愛情派。YESマンで和を作るが本音を言えない。</td></tr>
+          <tr class="gSO" data-name="賢者"><td class="nm">📚 賢者</td><td class="cmp">僧侶×魔法使い</td><td class="mbti">ISTJ 管理者</td><td>静かで誠実な知恵者。もめごとのない安定感。</td></tr>
+          <tr class="gMA" data-name="魔道士"><td class="nm">🧙 魔道士</td><td class="cmp">魔法使い</td><td class="mbti">INTP 論理学者</td><td>探求と論理の人。本質以外に興味なし。</td></tr>
+          <tr class="gMA" data-name="忍者"><td class="nm">🥷 忍者</td><td class="cmp">魔法使い×戦士</td><td class="mbti">INTJ 建築家</td><td>静かな戦略家。3年5年10年の計画を着実に遂行。</td></tr>
+          <tr class="gMA" data-name="道化師"><td class="nm">🃏 道化師</td><td class="cmp">魔法使い×踊り子</td><td class="mbti">ISTP 巨匠</td><td>あざとさとセンスを操る知的エンターテイナー。</td></tr>
+          <tr class="gMA" data-name="占い師"><td class="nm">🔯 占い師</td><td class="cmp">魔法使い×僧侶</td><td class="mbti">ISFP 冒険家</td><td>一見太陽に見えるフェイク持ちの穏やかな観察者。掴みどころがない。</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="matrix">※MBTI対応はあくまで近似(継承セミナー情報)。左の色帯は主タイプ(⚔️戦士/💃踊り子/☩僧侶/🔮魔法使い)。</div>
+    <div class="matrix">※各行をタップすると「恋愛観・長所・裏の顔/地雷」が開きます。MBTI対応は近似(継承セミナー情報)。左の色帯は主タイプ(⚔️戦士/💃踊り子/☩僧侶/🔮魔法使い)。</div>
   </div>
 </div>
 <footer>恋愛式学(ジョニー式/個別認識学)準拠|相性はあくまで指標。合わない相性でも理解で乗り越えられます</footer>
@@ -182,6 +187,26 @@ const COUPLE = {
 // コミュニケーション四則演算(ジョニー式)
 const COMMOP = { SE:"×(称賛とリアクションを増幅して返す)", OD:"＋(共感を足し続ける)", SO:"÷(押し付けず相手に合わせ調和)", MA:"−(無駄をそぎ簡潔に)" };
 
+// 16タイプ詳細(構成,MBTI,恋愛観,長所,裏の顔/地雷)。早見表のタップで開く
+const DETAIL16 = {
+ "狂戦士":["戦士","ESTJ 幹部","裏表ゼロの直球エネルギー。目標に一直線、アプローチもド直球。","行動力・決断力・大義のため切り開く","邪魔されると潰したくなる/単細胞・無茶と見られがち"],
+ "勇者":["戦士×踊り子","ESTP 起業家","熱量と愛嬌のリーダー。みんなのために前進する人気者。","好奇心旺盛・周囲を巻き込む・抜け感","詰めが甘い/後先考えずトラブルメーカーに"],
+ "聖戦士":["戦士×僧侶","ENFJ 主人公","天性のカリスマ。情熱的で献身的、将来を見据え妥協を好まない。","人望・統率力・共感力・Win-Win構築","自己犠牲しすぎ/支配的になりがち/批判に過敏で傷つく"],
+ "魔法戦士":["戦士×魔法使い","ENTJ 指揮官","外面よく情熱的だが合理的。行動派で自立した同類を好む。称賛が嬉しい。","効率性・問題解決・リーダーシップ・根拠ある自信","家で1人悩む裏の顔/高圧的共感で自滅/感情面の配慮不足。※相補性で家庭的男性を求めるキャリアウーマン型もいる"],
+ "姫":["踊り子","ESFP エンタメ","天真爛漫で愛され体質。協調性ありそうで実は「私が主役」。","明るさ・場を華やかに・愛嬌","わがまま・振り回す/共感されないと急に冷める"],
+ "騎士":["踊り子×戦士","ENFP 運動家","ノリと行動力のムードメーカー。16タイプ中もっとも距離感が近い。","場を明るく・仲間第一・要領がいい","衝動買い/八つ当たり・感情が剥き出しに"],
+ "妖精":["踊り子×僧侶","ESFJ 領事","社交的で自由奔放・明るく楽観的。中心人物で恋愛は一途。","聞き上手・共感・周りを巻き込む","熱しやすく冷めやすい/陰口に弱い/距離は近いが心の距離は別"],
+ "盗賊":["踊り子×魔法使い","ENTP 討論者","天性の世渡り上手でお調子者。あざといが本質は外さない二面性。","懐に入るのが上手・信頼させる・行動力","責任感弱い・言い訳上手/真意を見抜かれると逃げる(ついて離れて)"],
+ "シスター":["僧侶","ISFJ 擁護者","究極の癒しと献身。場の平和を静かに守る。","気配り・忍耐・最高の聞き手","自己主張なし/優柔不断/安定を失うことを恐れる"],
+ "兵士":["僧侶×戦士","INFJ 提唱者","理想主義者。社会貢献を成功と考え、深く意味のある関係を求める。","洞察力・誠実・隠れた情熱と野心","批判に敏感/燃え尽きやすい/理想と現実のギャップで自ら関係を壊すことも"],
+ "牧師":["僧侶×踊り子","INFP 仲介者","控えめで安定安心を求める愛情深いサポーター。記念日の記憶力◎。","相手ファースト・気配り・準備周到","団体だと自己主張しない/いいように使われる/考えすぎて動けない"],
+ "賢者":["僧侶×魔法使い","ISTJ 管理者","真面目・誠実で敵を作らない。生徒会長気質で規律正しい。","責任感・客観性・団体行動","決断力が弱い/前例がないと動けない/エネルギー低め"],
+ "魔道士":["魔法使い","INTP 論理学者","探求と論理の人。本質以外に興味なし。","分析力・本質を見抜く・独創性","理屈っぽい・行動しない/距離を詰められるのが苦手"],
+ "忍者":["魔法使い×戦士","INTJ 建築家","静かな戦略家。達成のため人を動かす監督・指揮官タイプ。","戦略性・本質把握・計画を着実に遂行","論破したがる・ケチ/コミュ力低く完璧主義で前に進めない"],
+ "道化師":["魔法使い×踊り子","ISTP 巨匠","あざとさとセンスを操る知的エンターテイナー。一見太陽のフェイク。","演技力・サバサバ・行動力","笑うが目が笑ってない/本心を隠す/深掘りされるのが苦手で地雷が読めない"],
+ "占い師":["魔法使い×僧侶","ISFP 冒険家","一見太陽に見えるフェイク持ちの穏やかな観察者。掴みどころがない。","段取り・危機回避・全体把握","陰気なオーラ/自己主張せず頭の中グルグル/新環境を嫌いネガティブ寄り"]
+};
+
 function fillSelect(sel, noneLabel){
   let html = `<option value="">${noneLabel}</option>`;
   KEYS.forEach(k=> html += `<option value="${k}">${EMOJI[k]} ${T[k]}</option>`);
@@ -227,6 +252,16 @@ function typeName(main, sub){
 }
 function rankOf(selfMain, otherMain, cat){
   return RANK[selfMain][cat].indexOf(otherMain); // 0..3
+}
+// 同類志向/相補性志向の2パターンを持つタイプの注記
+function complementNote(main, sub){
+  if(main==="SE" && sub==="MA"){ // 魔法戦士
+    return `<div class="tagline">⚖️ <b>相手は2パターンに分かれます。</b>①自立・刺激を好み<b>同類</b>に惹かれるタイプ ②相補性を求め<b>家庭的な相手(牧師=僧侶×踊り子系)</b>を好むキャリアウーマン型。「仕事の熱量」と「どんな家庭を築きたいか」で見極め、①なら成長・挑戦トーク、②なら安心・共感を厚めに。</div>`;
+  }
+  if(main==="SE"){ // 戦士系全般
+    return `<div class="tagline">⚖️ 戦士系は「自立した同類」を好む人と、相補性で「支えてくれる相手」を求める人がいます。相手がどちらかを会話で見極めると刺し方が変わります。</div>`;
+  }
+  return "";
 }
 
 function render(){
@@ -284,12 +319,27 @@ function render(){
     <div class="card">
       <h3>💑 交際後のリアル(相手=${T[yM]})</h3>
       <div class="dirtx">${COUPLE[yM]}</div>
+      ${complementNote(yM,yS)}
     </div>
     <div class="card">
       <h3>🧮 コミュニケーション四則演算(ジョニー式)</h3>
       <div class="dirtx">🙋 自分(${T[mM]})= <b>${COMMOP[mM]}</b><br>💗 相手(${T[yM]})= <b>${COMMOP[yM]}</b><br><span class="pure">相手の演算に合わせて接し方を切り替えると噛み合います。</span></div>
     </div>`;
 }
+// 16タイプ早見表: 行タップで詳細を開閉
+document.querySelectorAll('table.t16 tbody tr[data-name]').forEach(tr=>{
+  tr.addEventListener('click', ()=>{
+    const nx=tr.nextElementSibling;
+    if(nx && nx.classList.contains('det')){ nx.remove(); return; }
+    document.querySelectorAll('table.t16 tr.det').forEach(d=>d.remove());
+    const d=DETAIL16[tr.dataset.name];
+    if(!d) return;
+    const row=document.createElement('tr');
+    row.className='det';
+    row.innerHTML=`<td colspan="4"><span class="k">💗恋愛観:</span> ${d[2]}<br><span class="k">👍長所:</span> ${d[3]}<br><span class="k danger">⚠️裏の顔/地雷:</span> ${d[4]}</td>`;
+    tr.after(row);
+  });
+});
 render();
 </script>
 </body>
